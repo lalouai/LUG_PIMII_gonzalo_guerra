@@ -22,9 +22,122 @@ Partial Class Form1
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        components = New System.ComponentModel.Container()
+        Me.lbl_resultado = New System.Windows.Forms.Label()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.tb_expresion = New System.Windows.Forms.TextBox()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.Button1 = New System.Windows.Forms.Button()
+        Me.Button2 = New System.Windows.Forms.Button()
+        Me.lb_informacion = New System.Windows.Forms.ListBox()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.Button3 = New System.Windows.Forms.Button()
+        Me.SuspendLayout()
+        '
+        'lbl_resultado
+        '
+        Me.lbl_resultado.AutoSize = True
+        Me.lbl_resultado.Location = New System.Drawing.Point(225, 37)
+        Me.lbl_resultado.Name = "lbl_resultado"
+        Me.lbl_resultado.Size = New System.Drawing.Size(0, 13)
+        Me.lbl_resultado.TabIndex = 0
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(206, 37)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(13, 13)
+        Me.Label2.TabIndex = 1
+        Me.Label2.Text = "="
+        '
+        'tb_expresion
+        '
+        Me.tb_expresion.Location = New System.Drawing.Point(12, 34)
+        Me.tb_expresion.Name = "tb_expresion"
+        Me.tb_expresion.Size = New System.Drawing.Size(188, 20)
+        Me.tb_expresion.TabIndex = 2
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Location = New System.Drawing.Point(12, 18)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(168, 13)
+        Me.Label3.TabIndex = 3
+        Me.Label3.Text = "Ingrese una expresión matemática"
+        '
+        'Button1
+        '
+        Me.Button1.Location = New System.Drawing.Point(175, 75)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(75, 23)
+        Me.Button1.TabIndex = 4
+        Me.Button1.Text = "Resolver"
+        Me.Button1.UseVisualStyleBackColor = True
+        '
+        'Button2
+        '
+        Me.Button2.Location = New System.Drawing.Point(12, 75)
+        Me.Button2.Name = "Button2"
+        Me.Button2.Size = New System.Drawing.Size(75, 23)
+        Me.Button2.TabIndex = 5
+        Me.Button2.Text = "Otra vez"
+        Me.Button2.UseVisualStyleBackColor = True
+        '
+        'lb_informacion
+        '
+        Me.lb_informacion.FormattingEnabled = True
+        Me.lb_informacion.Location = New System.Drawing.Point(12, 135)
+        Me.lb_informacion.Name = "lb_informacion"
+        Me.lb_informacion.Size = New System.Drawing.Size(238, 277)
+        Me.lb_informacion.TabIndex = 6
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(12, 119)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(62, 13)
+        Me.Label1.TabIndex = 7
+        Me.Label1.Text = "Información"
+        '
+        'Button3
+        '
+        Me.Button3.Location = New System.Drawing.Point(94, 74)
+        Me.Button3.Name = "Button3"
+        Me.Button3.Size = New System.Drawing.Size(75, 23)
+        Me.Button3.TabIndex = 8
+        Me.Button3.Text = "+ info"
+        Me.Button3.UseVisualStyleBackColor = True
+        '
+        'Form1
+        '
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.Text = "Form1"
+        Me.ClientSize = New System.Drawing.Size(263, 107)
+        Me.Controls.Add(Me.Button3)
+        Me.Controls.Add(Me.Label1)
+        Me.Controls.Add(Me.lb_informacion)
+        Me.Controls.Add(Me.Button2)
+        Me.Controls.Add(Me.Button1)
+        Me.Controls.Add(Me.Label3)
+        Me.Controls.Add(Me.tb_expresion)
+        Me.Controls.Add(Me.Label2)
+        Me.Controls.Add(Me.lbl_resultado)
+        Me.Name = "Form1"
+        Me.Text = "Resolutor"
+        Me.ResumeLayout(False)
+        Me.PerformLayout()
+
     End Sub
 
+    Friend WithEvents lbl_resultado As Label
+    Friend WithEvents Label2 As Label
+    Friend WithEvents tb_expresion As TextBox
+    Friend WithEvents Label3 As Label
+    Friend WithEvents Button1 As Button
+    Friend WithEvents Button2 As Button
+    Friend WithEvents lb_informacion As ListBox
+    Friend WithEvents Label1 As Label
+    Friend WithEvents Button3 As Button
 End Class
