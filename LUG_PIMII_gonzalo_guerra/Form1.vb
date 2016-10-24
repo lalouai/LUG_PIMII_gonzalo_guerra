@@ -10,11 +10,9 @@
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         If tb_expresion.Text.Trim.Length > 0 Then
-            Try
-                lbl_resultado.Text = parseador.parsear(tb_expresion.Text)
-            Catch ex As Excepciones
-                Throw New Excepciones("Lo siento ha ocurrido un error")
-            End Try
+            lbl_resultado.Text = parseador.parsear(tb_expresion.Text)
+        Else
+            MsgBox("Lo siento, la expresin no puede ser vacia," & vbCrLf & " por favor intentelo nuevamente con un expresion adecuada")
         End If
     End Sub
 
@@ -22,6 +20,9 @@
         tb_expresion.Text = ""
         lbl_resultado.Text = ""
         lb_informacion.Items.Clear()
+        parseador.limpiar()
+        tb_expresion.Focus()
+
     End Sub
 
     Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click

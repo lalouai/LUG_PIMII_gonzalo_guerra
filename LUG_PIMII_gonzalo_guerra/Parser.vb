@@ -4,40 +4,44 @@
     Private exp As String
     Private rta As Double
     Private simbolo As String
-    Private longitud As Integer
-
+    Private semaforo As Integer
 
     Sub New()
         e = 0
         exp = ""
         simbolo = ""
-        longitud = 0
+        semaforo = 0
     End Sub
 
     Public Event informacion(ByVal mensaje As String)
 
     Public Function parsear(ByVal expresion As String) As Double
         RaiseEvent informacion("Iniciando parseo...")
-        exp = expresion + "=" + vbCrLf
+        exp = expresion + vbCrLf
         obtenerElemento()
-        rta = sumaResta()
-        longitud = expresion.Length
-        RaiseEvent informacion("Parseo terminado")
-        Return rta
+        Try
+            rta = sumaResta()
+            If semaforo > 0 Then
+                Throw New Excepciones("Expresion mal formada, nunca se cierra el parntesis")
+            Else
+                RaiseEvent informacion("Parseo terminado")
+                Return rta
+            End If
+        Catch ex As Exception
+            MsgBox("Excepcion" & vbCrLf & ex.Message)
+        End Try
+
+        Return Nothing
     End Function
 
     Private Sub obtenerElemento()
-
         simbolo = ""
         Dim aux As Char = Nothing
         aux = exp(e)
-
-        RaiseEvent informacion("exp(e) -> " & exp(e))
         While (aux.Equals(" ") Or aux.Equals("\t"))
             e += 1
             aux = exp(e)
         End While
-
         If (Not aux.Equals(vbCrLf)) Then
             ''' Mientras sea número
             If (IsNumeric(aux)) Then
@@ -46,39 +50,50 @@
                     e += 1
                     aux = exp(e)
                 End While
-
-                RaiseEvent informacion("obtenerElemento() --> número " & simbolo)
+                RaiseEvent informacion("Número " & simbolo & " detectado")
                 Return
             End If
             ''' multiplicacion
             If (aux.ToString = "*") Then
-                RaiseEvent informacion("obtenerElemento() --> multiplicación *")
+                RaiseEvent informacion("Multiplicación (*) detectada")
                 simbolo = aux
                 e += 1
                 Return
             End If
             ''' division
             If (aux.ToString = "/") Then
-                RaiseEvent informacion("obtenerElemento() --> división /")
+                RaiseEvent informacion("División (/) detectada")
                 simbolo = aux
                 e += 1
                 Return
             End If
             ''' suma
             If (aux.ToString = "+") Then
-                RaiseEvent informacion("obtenerElemento() --> suma +")
+                RaiseEvent informacion("Suma (+) detectada")
                 simbolo = aux
                 e += 1
                 Return
             End If
             ''' resta
             If (aux.ToString = "-") Then
-                RaiseEvent informacion("obtenerElemento() --> resta -")
+                RaiseEvent informacion("Resta (-) detectada")
                 simbolo = aux
                 e += 1
                 Return
             End If
-
+            If (aux.ToString = "(") Then
+                RaiseEvent informacion("Paréntesis ( ( ) detectado")
+                simbolo = aux
+                e += 1
+                semaforo += 1
+                Return
+            End If
+            If (aux.ToString = ")") Then
+                RaiseEvent informacion("Parentesis ( ) ) detectado")
+                simbolo = aux
+                e += 1
+                semaforo -= 1
+            End If
         End If
         simbolo = ""
         Return
@@ -93,17 +108,19 @@
             Dim operador As String = simbolo
             obtenerElemento()
             If (operador.Equals("+")) Then
-                RaiseEvent informacion("SUMA")
+                RaiseEvent informacion("Instanciando Suma")
                 suma = New Suma
                 suma.operando1 = salida
                 suma.operando2 = multiDiv()
                 salida = suma.resultado()
+                RaiseEvent informacion("Resultado de la Suma -> " & salida)
             ElseIf (operador.Equals("-")) Then
-                RaiseEvent informacion("RESTA")
+                RaiseEvent informacion("Instanciando Resta")
                 resta = New Resta
                 resta.operando1 = salida
                 resta.operando2 = multiDiv()
                 salida = resta.resultado()
+                RaiseEvent informacion("Resultado de la Resta -> " & salida)
             End If
         End While
         Return salida
@@ -118,27 +135,27 @@
             Dim operador As String = simbolo
             obtenerElemento()
             If (operador.Equals("*")) Then
-                RaiseEvent informacion("MULTIPLICACIÓN")
+                RaiseEvent informacion("Instanciando Multiplicación")
                 multi = New Multiplicacion
                 multi.operando1 = salida
                 multi.operando2 = parentesis()
                 salida = multi.resultado()
+                RaiseEvent informacion("Resultado de la Multiplicación -> " & salida)
             ElseIf (operador.Equals("/")) Then
-                RaiseEvent informacion("DIVISIÓN")
+                RaiseEvent informacion("Instanciando División")
                 divi = New Division
                 divi.operando1 = salida
                 divi.operando2 = parentesis()
                 salida = divi.resultado()
+                RaiseEvent informacion("Resultado de la División -> " & salida)
             End If
         End While
         Return salida
     End Function
 
-
-
     Private Function parentesis() As Double
-        RaiseEvent informacion("PARÉNTESIS")
         If (simbolo.Equals("(")) Then
+            RaiseEvent informacion("Paréntesis")
             obtenerElemento()
             Dim salida As Double = sumaResta()
             If (simbolo.Equals(")")) Then
@@ -151,11 +168,17 @@
     End Function
 
     Private Function numeros()
-        RaiseEvent informacion("NUMEROS")
+        RaiseEvent informacion("Número")
         Dim salida As Double = 0
         salida = Double.Parse(simbolo)
         obtenerElemento()
         Return salida
     End Function
 
+    Public Sub limpiar()
+        e = 0
+        exp = ""
+        simbolo = ""
+        semaforo = 0
+    End Sub
 End Class
